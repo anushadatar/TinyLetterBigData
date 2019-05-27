@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+CLI interface for utility functions.
+"""
+
 
 import argparse
 import getpass
@@ -6,7 +10,7 @@ import os
 import pandas as pd
 import tinyapi
 
-from pull_data import *
+from utils import *
 
 
 def main():

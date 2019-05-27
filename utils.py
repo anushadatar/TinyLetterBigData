@@ -1,5 +1,5 @@
 """
-Pull data functionality for tinyletter tools. Useful mainly for getting, 
+Utility functionality for tinyletter tools. Useful mainly for getting, 
 storing, and processing data from the tinyletter server.
 """
 
@@ -42,7 +42,11 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
     for subscriber in subscriber_data:
         del subscriber['data']
         del subscriber['key']
+    # Flatten out fields in the dictionary.
+    subscriber_data = flatten(subscriber_data)
+
     print(subscriber_data)
+
 
 def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     """
@@ -61,3 +65,10 @@ def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     """
     """
     pass
+
+def flatten(dictionary, separator='_', prefix=''):                                 
+    # Code heavily adopted from https://stackoverflow.com/a/19647596/4280216.
+    return { prefix + separator + k if prefix else k : v
+             for kk, vv in dictionary.items()
+             for k, v in flatten_dict(vv, separator, kk).items()
+             } if isinstance(dictionary, dict) else { prefix : dictionary}
