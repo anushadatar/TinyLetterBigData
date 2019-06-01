@@ -1,6 +1,7 @@
 """
 Utility functionality for tinyletter tools. Useful mainly for getting, 
 storing, and processing data from the tinyletter server.
+# TODO Add debugging statements if verbose = true
 """
 
 import argparse                                                                 
@@ -13,7 +14,17 @@ def pull_data():
     """
     Leverage existing tinyapi functionality to get data from the letters.
     Stores the subscriber, draft, message, and url data to separate csv files.
+
+    Those files store the subscriber, url, message, and draft data in separate
+    csv files called "sub_data.csv," "url_data.csv," "message_data.csv," 
+    and "draft_data.csv" respectively after filtering and flattening
+    each dataset. 
+
+    Note that the user will need to provide the tinyletter username and 
+    password via CLI. This can be modified, but should be done in a way
+    that promotes personal account security. 
     """
+
     username = input("Username: ")
     tinyletter = tinyapi.Session(username, getpass.getpass())
 
@@ -65,17 +76,29 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     """
     Processes raw url data output from tinyletter servers - removes any private
     authentictation artifacts, flattens, and makes into readable (and 
-    pareable!) csv file.
+    parseable!) csv file.
+
+    TODO Investigate what can be removed here and remove it.
     """
     pass
 
 def process_messages(message_data, verbose=True, message_filename="message_data,csv"):
     """
+    Processes raw url data output from tinyletter servers - removes any private 
+    authentictation artifacts, flattens, and makes into readable (and           
+    parseable!) csv file.                                                       
+                                                                                
+    TODO Investigate what can be removed here and remove it.  
     """
     pass
 
 def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     """
+    Processes raw url data output from tinyletter servers - removes any private 
+    authentictation artifacts, flattens, and makes into readable (and           
+    parseable!) csv file.                                                       
+                                                                                
+    TODO Investigate what can be removed here and remove it.  
     """
     pass
 
