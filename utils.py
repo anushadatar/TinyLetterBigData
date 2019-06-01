@@ -6,7 +6,7 @@ storing, and processing data from the tinyletter server.
 import argparse                                                                 
 import getpass                                                                  
 import os                                                                       
-import pandas as pd                                                             
+import pandas                         
 import tinyapi  
 
 def pull_data():
@@ -23,10 +23,23 @@ def pull_data():
     message_data = tinyletter.get_messages()
     draft_data = tinyletter.get_drafts()
 
-    process_subscribers(subscriber_data)
-    process_urls(url_data)
-    process_messages(message_data)
-    process_drafts(draft_data)
+    # Filter out unnecessary columns and flatten out the data.
+    filtered_sub = process_subscribers(subscriber_data)
+    filtered_url = process_urls(url_data)
+    filtered_message = process_messages(message_data)
+    filtered_draft = process_drafts(draft_data)
+
+    # Name each csv file.
+    sub_file = os.path.join(".", "sub_data.csv")
+    url_file = os.path.join(".", "url_data.csv")
+    message_file = os.path.join(".", "message_data.csv")
+    draft_file = os.path.join(".", "draft_data.csv")
+
+    # Save all of the filtered data to respective CSV files.
+    pandas.DataFrame(filtered_sub).to_csv(sub_file, encoding="utf8")
+    pandas.DataFrame(filtered_url).to_csv(url_file, encoding="utf8")
+    pandas.DataFrame(filtered_message).to_csv(message_file, encoding="utf8")
+    pandas.DataFrame(filtered_draft).to_csv(draft_file, encoding="utf8")
 
 def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_data.csv"):
     """
@@ -45,7 +58,7 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
     # Flatten out fields in the dictionary.
     subscriber_data = flatten(subscriber_data)
 
-    print(subscriber_data)
+    return subscriber_data
 
 
 def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
