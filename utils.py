@@ -80,7 +80,8 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
 
     TODO Investigate what can be removed here and remove it.
     """
-    pass
+    print(flatten(url_data))
+    return url_data
 
 def process_messages(message_data, verbose=True, message_filename="message_data,csv"):
     """
