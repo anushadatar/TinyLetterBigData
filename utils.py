@@ -61,16 +61,13 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
     # The subscriber data is a list of dictionaries for each subscriber where
     # each dict has two major additional subdicts : one with statistics about 
     # their interaction with the newsletter and one with their personal data.  
-    # We don't really have (or really want) personal data, so we can just 
-    # remove that information to simplify our records.
+    # We're not a big tech company, so we can't get away with messing with
+    # personal data, so we will just remove that information.
     for subscriber in subscriber_data:
         del subscriber['data']
         del subscriber['key']
     # Flatten out fields in the dictionary.
-    subscriber_data = flatten(subscriber_data)
-
-    return subscriber_data
-
+    return flatten(subscriber_data)
 
 def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     """
@@ -81,7 +78,7 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     TODO Investigate what can be removed here and remove it.
     """
     print(flatten(url_data))
-    return url_data
+    return flatten(url_data)
 
 def process_messages(message_data, verbose=True, message_filename="message_data,csv"):
     """
@@ -91,7 +88,7 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
                                                                                 
     TODO Investigate what can be removed here and remove it.  
     """
-    pass
+    return flatten(message_data)
 
 def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     """
@@ -101,7 +98,7 @@ def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
                                                                                 
     TODO Investigate what can be removed here and remove it.  
     """
-    pass
+    return flatten(draft_data)
 
 def flatten(dictionary, separator='_', prefix=''):                                 
     # Code heavily adopted from https://stackoverflow.com/a/19647596/4280216.

@@ -19,20 +19,21 @@ def main():
     sweet treasure trove of tinyletter data.
     """
     commands = argparse.ArgumentParser()
-    commands.add_argument("-u", "--update-data", help="Pulls data down \
+    commands.add_argument("-u", "--update", help="Pulls data down \
                           from the tinyletter servers, processes it, and \
                           stores it in CSV files.", 
                           action="store_true");
-    commands.add_argument("-a", "--all-time-stats", help="Gives all time stats
-                          from every issue.") 
-    commands.add_argument("-i", "--issue-stats", help="Gives stats for
-                          some issue i of the newsletter (0-indexed.")
+    commands.add_argument("-a", "--all", help="Gives all time stats \
+                          from every issue.", action="store_true") 
+    commands.add_argument("-i", "--issue", help="Gives stats for \
+                          some issue i of the newsletter (0-indexed.", \
+                          action="store_true")
     arguments = commands.parse_args()
-    if arguments.pulldata:
+    if arguments.update:
         pull_data()
-    if arguments.all-time-stats:
+    if arguments.all:
         all_time_stats()
-    if arguments.latest_stats:
+    if arguments.issue:
         itemized_stats()
 
 if __name__ == '__main__':
