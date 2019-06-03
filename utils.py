@@ -67,7 +67,7 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
     The final .csv file will have a column with the email address  of each user
     and a column with the 'stats' dictionary for them with nothing ommitted.
     """
-
+    # Omit unneeded columns, feel free to add or remove deletions as needed.
     for subscriber in subscriber_data:
         del subscriber['data']
         del subscriber['is_new']
@@ -77,7 +77,6 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
         del subscriber['updated_at']
         del subscriber['created_at']
         del subscriber['__id']
-        del subscriber['id']
     subscriber_data = flatten(subscriber_data)
     return subscriber_data
 
@@ -89,13 +88,12 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
 
     TODO Investigate what can be removed here and remove it.
     """
+    # Omit unneeded columns, feel free to add or remove deletions as needed.
     for url in url_data:
         del url['__id']
         del url['__methods']
         del url['__model']
-        del url['id']
         del url['stub']
-        del url['message_id']
         del url['unique_clicks']
     return url_data
 
@@ -107,6 +105,22 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
                                                                                 
     TODO Investigate what can be removed here and remove it.  
     """
+    # Omit unneeded columns, feel free to add or remove deletions as needed. 
+    for message in message_data:
+        del message['__id']
+        del message['__methods']
+        del message['__model']
+        del message['created_at']
+        del message['public_message']
+        del message['queue_count']
+        del message['scheduled_at']
+        del message['snippet']
+        del message['status']
+        del message['to_list']
+        del message['tweet_id']
+        del message['updated_at']
+        del message['stub']
+ 
     return (message_data)
 
 def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
@@ -116,7 +130,9 @@ def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     parseable!) csv file.                                                       
                                                                                 
     TODO Investigate what can be removed here and remove it.  
+    
     """
+    
     return (draft_data)
 
 def flatten(dictionary, separator='_', prefix=''):                                 
