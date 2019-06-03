@@ -1,5 +1,4 @@
 """
-"""
 Provide stats associated with a certain issue of the newsletter.
 """
 
