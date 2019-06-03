@@ -57,17 +57,29 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
     Processes raw subscriber data output from tinyletter servers - removes
     private keys and similar data, flattens and makes into readable (and 
     parseable!) csv file.
+    
+    The subscriber data is a list of dictionaries for each subscriber where
+    each dict has two major additional subdicts : one with statistics about 
+    their interaction with the newsletter and one with their personal data.  
+    We're not a big tech company, so we can't get away with messing with
+    personal data, so we will just remove that information.
+    
+    The final .csv file will have a column with the email address  of each user
+    and a column with the 'stats' dictionary for them with nothing ommitted.
     """
-    # The subscriber data is a list of dictionaries for each subscriber where
-    # each dict has two major additional subdicts : one with statistics about 
-    # their interaction with the newsletter and one with their personal data.  
-    # We're not a big tech company, so we can't get away with messing with
-    # personal data, so we will just remove that information.
+
     for subscriber in subscriber_data:
         del subscriber['data']
+        del subscriber['is_new']
         del subscriber['key']
-    # Flatten out fields in the dictionary.
-    return flatten(subscriber_data)
+        del subscriber['__methods']
+        del subscriber['__model'] 
+        del subscriber['updated_at']
+        del subscriber['created_at']
+        del subscriber['__id']
+        del subscriber['id']
+    subscriber_data = flatten(subscriber_data)
+    return subscriber_data
 
 def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     """
@@ -77,8 +89,15 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
 
     TODO Investigate what can be removed here and remove it.
     """
-    print(flatten(url_data))
-    return flatten(url_data)
+    for url in url_data:
+        del url['__id']
+        del url['__methods']
+        del url['__model']
+        del url['id']
+        del url['stub']
+        del url['message_id']
+        del url['unique_clicks']
+    return url_data
 
 def process_messages(message_data, verbose=True, message_filename="message_data,csv"):
     """
@@ -88,7 +107,7 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
                                                                                 
     TODO Investigate what can be removed here and remove it.  
     """
-    return flatten(message_data)
+    return (message_data)
 
 def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     """
@@ -98,7 +117,7 @@ def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
                                                                                 
     TODO Investigate what can be removed here and remove it.  
     """
-    return flatten(draft_data)
+    return (draft_data)
 
 def flatten(dictionary, separator='_', prefix=''):                                 
     # Code heavily adopted from https://stackoverflow.com/a/19647596/4280216.

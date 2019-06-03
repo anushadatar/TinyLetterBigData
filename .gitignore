@@ -107,4 +107,4 @@ venv.bak/
 *.swp
 
 # customer data
-*.csv
+*.csv*
