@@ -1,9 +1,7 @@
 """
 Utility functionality for tinyletter tools. Useful mainly for getting, 
 storing, and processing data from the tinyletter server.
-# TODO Add debugging statements if verbose = true
 """
-
 import argparse                                                                 
 import getpass                                                                  
 import os                                                                       
@@ -52,7 +50,7 @@ def pull_data():
     pandas.DataFrame(filtered_message).to_csv(message_file, encoding="utf8")
     pandas.DataFrame(filtered_draft).to_csv(draft_file, encoding="utf8")
 
-def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_data.csv"):
+def process_subscribers(subscriber_data, csv_filename="subscriber_data.csv"):
     """
     Processes raw subscriber data output from tinyletter servers - removes
     private keys and similar data, flattens and makes into readable (and 
@@ -77,16 +75,14 @@ def process_subscribers(subscriber_data, verbose=True, csv_filename="subscriber_
         del subscriber['updated_at']
         del subscriber['created_at']
         del subscriber['__id']
-    subscriber_data = flatten(subscriber_data)
-    return subscriber_data
+    subscriber_data_filtered = [flatten(sub) for sub in subscriber_data]
+    return subscriber_data_filtered
 
 def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
     """
     Processes raw url data output from tinyletter servers - removes any private
     authentictation artifacts, flattens, and makes into readable (and 
     parseable!) csv file.
-
-    TODO Investigate what can be removed here and remove it.
     """
     # Omit unneeded columns, feel free to add or remove deletions as needed.
     for url in url_data:
@@ -102,8 +98,6 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
     Processes raw url data output from tinyletter servers - removes any private 
     authentictation artifacts, flattens, and makes into readable (and           
     parseable!) csv file.                                                       
-                                                                                
-    TODO Investigate what can be removed here and remove it.  
     """
     # Omit unneeded columns, feel free to add or remove deletions as needed. 
     for message in message_data:
@@ -120,24 +114,28 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
         del message['tweet_id']
         del message['updated_at']
         del message['stub']
- 
-    return (message_data)
+    message_data_filtered = [flatten(mes) for mes in message_data]        
+    return message_data_filtered
 
 def process_drafts(draft_data, verbose=True, drafts_filename="draft_data.csv"):
     """
     Processes raw url data output from tinyletter servers - removes any private 
     authentictation artifacts, flattens, and makes into readable (and           
     parseable!) csv file.                                                       
-                                                                                
-    TODO Investigate what can be removed here and remove it.  
-    
     """
-    
     return (draft_data)
 
 def flatten(dictionary, separator='_', prefix=''):                                 
-    # Code heavily adopted from https://stackoverflow.com/a/19647596/4280216.
+    """
+    Helper method to turn subdictionaries into additional columns.
+    
+    dictionary: Dictionary to separate
+    separator: Delimeter for new headers.
+    prefix: Start for new headers.
+    
+    ode heavily adopted from https://stackoverflow.com/a/19647596/4280216.
+    """
     return { prefix + separator + k if prefix else k : v
              for kk, vv in dictionary.items()
-             for k, v in flatten_dict(vv, separator, kk).items()
+             for k, v in flatten(vv, separator, kk).items()
              } if isinstance(dictionary, dict) else { prefix : dictionary}
