@@ -8,7 +8,7 @@ import os
 import pandas                         
 import tinyapi  
 
-def pull_data():
+def pull_data(username=None, password=None):
     """
     Leverage existing tinyapi functionality to get data from the letters.
     Stores the subscriber, draft, message, and url data to separate csv files.
@@ -22,9 +22,11 @@ def pull_data():
     password via CLI. This can be modified, but should be done in a way
     that promotes personal account security. 
     """
-
-    username = input("Username: ")
-    tinyletter = tinyapi.Session(username, getpass.getpass())
+    if username == None:
+        username = input("Username: ")
+    if password == None:
+        password = getpass.getpass()
+    tinyletter = tinyapi.Session(username, password)
 
     # Pull relevant data tables from the tinyletter server.
     subscriber_data = tinyletter.get_subscribers()
@@ -90,7 +92,6 @@ def process_urls(url_data, verbose=True, csv_filename="url_data.csv"):
         del url['__methods']
         del url['__model']
         del url['stub']
-        del url['unique_clicks']
     return url_data
 
 def process_messages(message_data, verbose=True, message_filename="message_data,csv"):
@@ -107,7 +108,6 @@ def process_messages(message_data, verbose=True, message_filename="message_data,
         del message['created_at']
         del message['public_message']
         del message['queue_count']
-        del message['scheduled_at']
         del message['snippet']
         del message['status']
         del message['to_list']

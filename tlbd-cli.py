@@ -2,6 +2,9 @@
 """
 CLI interface for utility functions.
 """
+# TODO Add Functionality to clear dataset from local files.
+# TODO Add error handling for each command. 
+# TODO Update each method to handle changes to util to support web framework.
 
 import argparse
 import getpass

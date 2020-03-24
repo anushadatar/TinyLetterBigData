@@ -6,18 +6,18 @@ Statistics about your [tinyletter.com](https://tinyletter.com) newsletter, strai
 There are currently a few main commands built into [tinyletterbigdata.py](https://github.com/anushadatar/TinyLetterBigData/blob/master/tinyletterbigdata.py). They can all be run from a standard command line interface.
 - The update command:
 ```sh
-python3 tinyletter.py -u
+python3 tlbd-cli.py -u
 ```
 This command will create four csv files in your directory with cleaned and flattened data for subscribers, messages, drafts, and urls. These csv files can be processed independently or through the use of the following summary commands.
 
 - The all-time statistics command:
 ```sh
-python3 tinyletter.py -a
+python3 tlbd-cli.py -a
 ```
 This command will report all-time statistics for the newsletter based on the most updated data by printing it to the console.
 - The numbered issue statics command:
 ```sh
-python3 tinyletter.py -i
+python3 tlbd-cli.py -i
 ```
 This command will prompt the user to input which issue to get spcific data for and print that data to the console. 
 
