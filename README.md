@@ -1,6 +1,8 @@
 # Tiny Letter, Big Data
 Statistics about your [tinyletter.com](https://tinyletter.com) newsletter, straight from the command line. Get quick summaries and dive into trends. Created mainly as a way to learn more about the many newsletters I send out, but feel free to use and contribute. 
 
+If you do use this utility, please do right by your subscribers and let them know you are using this tool. If subscribers would like to opt out, you can support that by modifying the process_subscribers() function in [utils.py](https://github.com/anushadatar/TinyLetterBigData/blob/master/utils.py) to delete their row. 
+
 ## Usage
 
 There are currently a few main commands built into [The TinyLetter CLI](https://github.com/anushadatar/TinyLetterBigData/blob/master/tinyletterbigdata.py). They can all be run from a standard command line interface.
